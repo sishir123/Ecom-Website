@@ -81,22 +81,6 @@ getcategories();
 ?>
 </ul>
 <br>
-<form action="" method="post">
-<div class="col-md-10">
-<ul class="navbar-nav me-auto text-center">
-<li class="nav-item bg-secondary">
-<a href="#" class="nav-link text-light"><h4>Sort By:</h4></a> </li></ul>
-<div class="input-group mb-3">
-<select name="sort_numeric" class="form-control">
-<option value="">--Sort By--</option>
-<option value="asc"<?php if (isset($_POST['sort_numeric']) && $post['sort_numeric'] == "low-high") { echo "selected"; } ?>> Low - High</option>
-<option value="desc"<?php if (isset($_post['sort_numeric']) && $post['sort_numeric'] == "high-low") { echo "selected"; } ?>> High - Low </option>
-</select>
-<button type="submit" class="input-group-text" id="basic-addon2" name="filter_btn">Filter</button>
-</div>
-</div>
-</div>
-</form>
 </div>
 
     <div class="footer p-3 text-center">

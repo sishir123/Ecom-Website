@@ -32,16 +32,75 @@
                     echo $_POST['username']; ?>">
                         
                 </div>
+                <?php
+            if (isset($_POST['submit'])) {
+                $username = $_POST['username'];
+               
+                
+                $age_range = $_POST['age_range'];
+                
+                if (!empty($username)) {
+                    if (strlen($username) >= 6) {
+                        if (ctype_alpha($username)) {
+                            $validusername = $username;
+                        } else {
+                            echo "<b>Username cannot be a number.</b></br>";
+                        }
+                    } else {
+                        echo "<b>Username is less than 6</b> </br>";
+                    } 
+                   
+                }else{
+                    echo "<b>Your Username is empty</b> </br>";
+                }
+            }
+            ?>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" value="<?php if (isset($_POST['password']))
-                        echo $_POST['password']; ?>">>
+                        echo $_POST['password']; ?>">
                 </div>
+               <?php $password = $_POST['password'];
+                  //For password
+                  if (!empty($password)) {
+                    if (preg_match('/[a-z]/', $password)) {
+                        if (preg_match('/[A-Z]/', $password)) {
+                            if (preg_match('/[0-9]/', $password)) {
+                                $validpassword = $password;
+                            } else {
+                                echo "<b>Insert numeric value in password</b> </br>";
+                            }
+                        } else {
+                            echo "<b>Insert any uppercase value in password</b> </br>";
+                        }
+                    } else {
+                        echo "<b>Insert any lowercase value in password</b> </br>";
+                    }
+                } else {
+                    echo "<b>Your password is empty</b> </br>";
+                }
+               
+               ?>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" value="<?php if (isset($_POST['email']))
-                        echo $_POST['email']; ?>">>
+                        echo $_POST['email']; ?>">
                 </div>
+
+                <?php $email = $_POST['email']; 
+                 //For email
+                 if (!empty($email)) {
+                    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        $validemail = $email;
+                    } else {
+                        echo "<b>Invalid email</b> </br>";
+                    }
+                } else {
+                    echo "<b>Your email is empty</b> </br>";
+                }
+                    
+                
+                ?>
                 <label for="age_range">Age Range:</label>
                 <select id="age_range" name="age_range">
 
@@ -70,88 +129,23 @@
                     } ?>>Over 65</option>
                 </select>
                 <br>
+                <?php
+                //For age range
+                if (!empty($age_range) && $age_range != '0') {
+                    $valid_age_range = $age_range;
+                } else {
+                    echo "<b>Select a age range</b> </br>";
+                }
+                ?>
                 <input type="checkbox" name="terms" value="accepted"> I accept the terms and conditions
+                <?php
+                ?>
                 <button type="submit" value="submit" class="btn" name="submit">Submit</button>
                 <h4>Already have a account?</h4>
                 <a href="login.php">Login here</a>
                 
             </form>
-            <?php
-            if (isset($_POST['submit'])) {
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $email = $_POST['email'];
-                $age_range = $_POST['age_range'];
-                
-                if (!empty($username)) {
-                    if (strlen($username) >= 6) {
-                        if (ctype_alpha($username)) {
-                            $validusername = $username;
-                        } else {
-                            echo "Username cannot be a number.</br>";
-                        }
-                    } else {
-                        echo "Username is less than 6 </br>";
-                    } 
-                   
-                }else{
-                    echo "Your Username is empty </br>";
-                }
-
-                //For password
-                if (!empty($password)) {
-                    if (preg_match('/[a-z]/', $password)) {
-                        if (preg_match('/[A-Z]/', $password)) {
-                            if (preg_match('/[0-9]/', $password)) {
-                                $validpassword = $password;
-                            } else {
-                                echo "Insert numeric value in password </br>";
-                            }
-                        } else {
-                            echo "Insert any uppercase value in password </br>";
-                        }
-                    } else {
-                        echo "Insert any lowercase value in password </br>";
-                    }
-                } else {
-                    echo "Your password is empty </br>";
-                }
-
-
-                //For email
-                if (!empty($email)) {
-                    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        $validemail = $email;
-                    } else {
-                        echo "Invalid email </br>";
-                    }
-                } else {
-                    echo "Your email is empty </br>";
-                }
-                    
-                //For age range
-                if (!empty($age_range) && $age_range != '0') {
-                    $valid_age_range = $age_range;
-                } else {
-                    echo "Select a age range </br>";
-                }
-
-                //For Terms 
-                if (isset($_POST["terms"])) {
-                    include('./server/connection.php');
-                    $sql = "INSERT into forms (username, password, email, age_range) values ('$validusername', '$validpassword', '$validemail', '$valid_age_range')";
-                    $query = mysqli_query($conn, $sql);
-                    if ($query) {
-                        echo "Registered </br>";
-                    } else {
-                        echo "Failed to register </br>";
-                    }
-                } else {
-                    echo "Tick the terms and conditions. </br>";
-                }
-               
-            }
-            ?>
+        
         </div>
     </div>
 </body>
